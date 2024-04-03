@@ -1,6 +1,10 @@
-<script setup></script>
+<script setup>
+import  HeaderComp  from '../components/icons/HeaderComp.vue'
+</script>
 
 <template>
 
-    <h1>VEICULO</h1>
+<main>
+    <HeaderComp />
+</main>
 </template>
