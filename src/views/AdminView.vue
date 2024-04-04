@@ -1,5 +1,5 @@
 <script setup>
-import  HeaderComp  from '../components/icons/HeaderComp.vue'
+import  HeaderComp  from '../components/HeaderComp.vue'
 </script>
 
 <template>
