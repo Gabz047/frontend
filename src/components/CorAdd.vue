@@ -58,5 +58,6 @@ async function editar(cor_para_editar) {
   width: 20vw;
   height: 50vh;
   overflow-y: hidden;
+  padding: 2vh;
 }
 </style>

@@ -3,7 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import GeralApi from '@/api/geral'
 const geralApi = new GeralApi()
 
-const defaultVeiculo = { id: null, ano: '', descricao: '', preco: null, cor: '', modelo: '', acessorios: [] }
+const defaultVeiculo = { id: null, ano: '', descricao: '', preco: null, cor: '', modelo: '', acessorios: [], imagem: null }
 const veiculos = ref([])
 const veiculo = reactive({ ...defaultVeiculo })
 
@@ -36,6 +36,8 @@ onMounted(async () => {
   modelos.value = await geralApi.buscarTodosOsDados(`/modelos/`)
   categorias.value = await geralApi.buscarTodosOsDados(`/categorias/`)
   acessorios.value = await geralApi.buscarTodosOsDados(`/acessorios/`)
+  imagens.value = await geralApi.buscarTodosOsDados(`/api/media/`)
+  console.log(imagens.value)
 })
 
 function limpar() {
@@ -103,5 +105,6 @@ async function editar(veiculo_para_editar) {
   width: 46vw;
   height: 50vh;
   overflow-y: hidden;
+  padding: 2vh;
 }
 </style>

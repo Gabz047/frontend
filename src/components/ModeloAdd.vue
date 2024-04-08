@@ -77,5 +77,6 @@ async function editar(modelo_para_editar) {
   width: 46vw;
   height: 50vh;
   overflow-y: hidden;
+  padding: 2vh;
 }
 </style>
