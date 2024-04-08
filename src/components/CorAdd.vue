@@ -7,7 +7,7 @@ const cor = reactive({ ...defaultCor })
 const cores = ref([])
 
 onMounted(async () => {
-  cores.value = await geralApi.buscarTodosOsDados(`/cors/`)
+  cores.value = await geralApi.buscarTodosOsDados(`/cores/`)
   console.log(cores.value)
 })
 
@@ -17,17 +17,17 @@ function limpar() {
 
 async function adicionar() {
   if (cor.id) {
-    await geralApi.atualizarDado(`/cors/${cor.id}/`, cor)
+    await geralApi.atualizarDado(`/cores/${cor.id}/`, cor)
   } else {
-    await geralApi.adicionarDado(`/cors/`, cor)
+    await geralApi.adicionarDado(`/cores/`, cor)
   }
-  cores.value = await geralApi.buscarTodosOsDados(`/cors/`)
+  cores.value = await geralApi.buscarTodosOsDados(`/cores/`)
   limpar()
 }
 
 async function remover(id) {
-  await geralApi.removerDado(`/cors/`, `${id}/`)
-  cores.value = await geralApi.buscarTodosOsDados(`/cors/`)
+  await geralApi.removerDado(`/cores/`, `${id}/`)
+  cores.value = await geralApi.buscarTodosOsDados(`/cores/`)
   limpar()
 }
 

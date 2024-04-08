@@ -17,9 +17,9 @@ function limpar() {
 
 async function adicionar() {
   if (categoria.id) {
-    await geralApi.atualizarDado(`/categorias/${categoria.id}/`, categorias)
+    await geralApi.atualizarDado(`/categorias/${categoria.id}/`, categoria)
   } else {
-    await geralApi.adicionarDado(`/categorias/`, categorias)
+    await geralApi.adicionarDado(`/categorias/`, categoria)
   }
   categorias.value = await geralApi.buscarTodosOsDados(`/categorias/`)
   limpar()

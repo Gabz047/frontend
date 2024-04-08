@@ -3,7 +3,7 @@ import { ref, reactive, onMounted } from 'vue'
 import GeralApi from '@/api/geral'
 const geralApi = new GeralApi()
 
-const defaultVeiculo = { id: null, ano: '', descricao: '', preco: null, cor: '', modelo: '' }
+const defaultVeiculo = { id: null, ano: '', descricao: '', preco: null, cor: '', modelo: '', acessorios: [] }
 const veiculos = ref([])
 const veiculo = reactive({ ...defaultVeiculo })
 
@@ -23,12 +23,19 @@ const defaultModelo = { id: null, nome: '', cor: '', marca: '' }
 const modelo = reactive({ ...defaultModelo })
 const modelos = ref([])
 
+const defaultAcessorio = {id: null, descricao: ""}
+const acessorio = reactive({ ...defaultAcessorio})
+const acessorios = ref([])
+
+const guardavalor = ref("")
+
 onMounted(async () => {
   veiculos.value = await geralApi.buscarTodosOsDados(`/veiculos/`)
   cores.value = await geralApi.buscarTodosOsDados(`/cores/`)
   marcas.value = await geralApi.buscarTodosOsDados(`/marcas/`)
   modelos.value = await geralApi.buscarTodosOsDados(`/modelos/`)
   categorias.value = await geralApi.buscarTodosOsDados(`/categorias/`)
+  acessorios.value = await geralApi.buscarTodosOsDados(`/acessorios/`)
 })
 
 function limpar() {
@@ -37,8 +44,10 @@ function limpar() {
 
 async function adicionar() {
   if (veiculo.id) {
+    veiculo.acessorios.push(guardavalor.value)
     await geralApi.atualizarDado(`/veiculos/${veiculo.id}/`, veiculo)
   } else {
+    veiculo.acessorios.push(guardavalor.value)
     await geralApi.adicionarDado(`/veiculos/`, veiculo)
     console.log(veiculos.value)
   }
@@ -71,6 +80,10 @@ async function editar(veiculo_para_editar) {
     <label for="modelofield">Modelos</label>
     <select v-model="veiculo.modelo" id="modelofield">
       <option v-for="modelo in modelos" :key="modelo.id">{{ modelo.id }}</option>
+    </select>
+    <label for="acessoriofield">Acessorios</label>
+    <select v-model="guardavalor" id="acessoriofield">
+      <option v-for="acessorio in acessorios" :key="acessorio.id">{{ acessorio.id }}</option>
     </select>
     <button @click="adicionar">Salvar</button>
     <ul>
