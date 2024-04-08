@@ -1,31 +1,29 @@
 <script setup>
 import GeralApi from '@/api/geral'
-import {ref, reactive, onMounted} from 'vue';
+import { ref, reactive, onMounted } from 'vue'
 const geralApi = new GeralApi()
-const defaultCategoria = {id: null, descricao: ""}
+const defaultCategoria = { id: null, descricao: '' }
 const categorias = ref([])
 const categoria = reactive({ ...defaultCategoria })
 
 onMounted(async () => {
-  categorias.value = await geralApi.buscarTodosOsDados(
-    `/categorias/`
-  )
+  categorias.value = await geralApi.buscarTodosOsDados(`/categorias/`)
   console.log(categorias.value)
-});
+})
 
 function limpar() {
-  Object.assign(categoria, {...defaultCategoria});
+  Object.assign(categoria, { ...defaultCategoria })
 }
 
 async function adicionar() {
-  if (categoria.id){
-    await geralApi.atualizarDado(`/categorias/${categoria.id}/`, categoria)
+  if (categoria.id) {
+    await geralApi.atualizarDado(`/categorias/${categoria.id}/`, categorias)
   } else {
-    await geralApi.adicionarDado(`/categorias/`, categoria)
+    await geralApi.adicionarDado(`/categorias/`, categorias)
   }
   categorias.value = await geralApi.buscarTodosOsDados(`/categorias/`)
-  limpar();
-} 
+  limpar()
+}
 
 async function remover(id) {
   await geralApi.removerDado(`/categorias/`, `${id}/`)
@@ -39,16 +37,26 @@ async function editar(categoria_para_editar) {
 </script>
 
 <template>
-     <input type="text" v-model="categoria.descricao">
+  <div class="categoria">
+    <h1>CATEGORIAS</h1>
+    <input type="text" v-model="categoria.descricao" />
     <button @click="adicionar">Salvar</button>
     <ul>
-      <li v-for="categoria in categorias" :key="categoria.id"> 
+      <li v-for="categoria in categorias" :key="categoria.id">
         <span @click="editar(categoria)">
-        {{ categoria.descricao }}
-      </span>
-      <button @click="remover(categoria.id)">X</button> 
+          {{ categoria.descricao }}
+        </span>
+        <button @click="remover(categoria.id)">X</button>
       </li>
     </ul>
+  </div>
 </template>
 
-<style></style>
+<style>
+.categoria {
+  border: 1px solid pink;
+  width: 20vw;
+  height: 50vh;
+  overflow-y: hidden;
+}
+</style>
